@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 
 // Initialisation de dotenv
@@ -12,10 +13,16 @@ dotenv.config();
 // Initialisation de l'application Express
 const app = express();
 
+// Autoriser toutes les origines
+app.use(cors({
+  origin: 'http://localhost:3000',  // L'adresse de 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
 // Middleware pour gérer les requêtes JSON
 app.use(express.json());
-
-
 // Connexion à MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
